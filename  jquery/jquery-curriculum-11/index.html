@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery curriculum</title>
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css">
+
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body id="top">
+  
+  <header>
+    <div class="header__inr">
+      <div class="logo">LOGO</div>
+
+      <div class="">
+        <nav>
+          <ul class="gnav">
+            <li><a href="#">リンク01</a></li>
+            <li><a href="#">リンク02</a></li>
+            <li><a href="#">リンク03</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <div class="main-visual">
+      <div class="js-main-visual">
+        <div><img src="http://placekitten.com/g/640/340"></div>
+        <div><img src="http://placekitten.com/g/700/340"></div>
+        <div><img src="http://placekitten.com/g/600/340"></div>
+        <div><img src="http://placekitten.com/g/500/340"></div>
+      </div>
+    </div>
+
+    <div class="content__inr">
+
+      <div class="sidebar">
+        <ul class="sidebar__links">
+          <li><a href="#"><span>サイドメニュー01</span></a></li>
+          <li><a href="#"><span>サイドメニュー02</span></a></li>
+          <li><a href="#"><span>サイドメニュー03</span></a></li>
+          <li><a href="#"><span>サイドメニュー04</span></a></li>
+        </ul>
+        <div class="sidebar__links__bar"></div>
+      </div>
+
+
+      <main class="main">
+
+        <section class="main__sec">
+          <h1 class="ttl">TITLE</h1>
+          <p>texttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttext</p>
+          <a href="#" class="btn-more js-more-content-trg">もっと詳しく見る ↓</a>
+          <div class="more-content js-more-content">
+            <p>もっと見るの中身が表示されます。もっと見るの中身が表示されます。もっと見るの中身が表示されます。もっと見るの中身が表示されます。もっと見るの中身が表示されます。もっと見るの中身が表示されます。もっと見るの中身が表示されます。もっと見るの中身が表示されます。もっと見るの中身が表示されます。もっと見るの中身が表示されます。もっと見るの中身が表示されます。もっと見るの中身が表示されます。もっと見るの中身が表示されます。もっと見るの中身が表示されます。</p>
+          </div>
+        </section>
+
+        <section class="main__sec">
+          <div class="tab-box">
+            <ul class="tab-box__select js-tab-box-selector">
+              <li><a href="#" class="is-current">tab01</a></li>
+              <li><a href="#">tab02</a></li>
+              <li><a href="#">tab03</a></li>
+              <li><a href="#">tab04</a></li>
+            </ul>
+
+            <div class="tab-box__inr js-tab-box-content">
+              <div>tab01のコンテンツ</div>
+              <div>tab02のコンテンツ</div>
+              <div>tab03のコンテンツ</div>
+              <div>tab4のコンテンツ</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="main__sec">
+          <p>以下のボタンを押すとモーダルが発動します。</p>
+          <button class="js-modal-trg">モーダルを表示</button>
+        </section>
+
+      </main>
+
+    </div>
+  </div>
+
+
+  <div><a href="#top" class="btn-go-top js-go-top">TOP</a></div>
+  
+  
+  <footer>
+    <div class="footer__inr">
+      LOGO
+    </div>
+  </footer>
+
+
+  <div class="js-modal modal">
+    <div class="modal__inr">
+      <a href="#" class="modal__close js-modal-close"><span class="material-icons-outlined">close</span></a>
+      モーダルが表示されました。<br>×ボタンを押すとモーダルが閉じます
+    </div>
+
+    <div class="modal__bg js-modal-close"></div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
