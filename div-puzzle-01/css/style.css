@@ -1,1 +1,25 @@
 @charset "utf-8";
+.header {
+    width: 1200px;
+    height: 70px;
+    background: #37f3d3;
+}
+
+.contents {
+    display: flex;
+}
+.sideCol {
+    width: 300px;
+    height: 500px;
+    background: #fcf175;
+}
+.mainCol {
+    width: 900px;
+    height: 500px;
+    background: #71db6b;
+}
+.footer {
+    width: 1200px;
+    height: 130px;
+    background: #a7a2a2;
+}
