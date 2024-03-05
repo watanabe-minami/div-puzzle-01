@@ -11,6 +11,7 @@ html, body, h1, h2, h3, h4, ul, ol, dl, li, dt, dd, p, div, span, img, a, table,
 }
 article, header, footer, aside, figure, figcaption, nav, section { 
   display:block;
+  
 }
 body {
   line-height: 1;
