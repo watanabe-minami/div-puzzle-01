@@ -7,42 +7,62 @@ import Navbar from './components/Navbar/Navbar';
 function App() {
   const initialURL = "https://narutodb.xyz/api/character";
   const [narutoData, setNarutoData] = useState([]);
-  const [nextURL, setNextURL] = useState("");
-  const [prevURL, setPrevURL] = useState("");
+  // const [nextURL, setNextURL] = useState("");
+  // const [prevURL, setPrevURL] = useState("");
 
   useEffect(() => {
-    const fetchNarutoData = async () => {
-         let res = await getAllNaruto(initialURL);
-         //console.log(res);
-         setNextURL(res.next);
-        loadNaruto(res.results)
-    };
+const fetchNarutoData = async () => {
+  let res = await getAllNaruto(initialURL);
+  console.log("API Response:", res); 
+  if (res && res.characters) {
+    setNarutoData(res.characters);
+    // setNextURL(res.next || "");
+    // setPrevURL(res.previous || "");
+  } else {
+    console.error("Unexpected API response structure:", res);
+  }
+};
+
 
     fetchNarutoData();
   }, []);
 
-  const loadNaruto = async (data) =>{
-    let _narutoData = await Promise.all(
-      data.map((characters) => {
-        let narutoRecord = getAllNaruto(characters.url);
-        return narutoRecord;
-      })
-    );
-    setNarutoData(_narutoData);
+  const loadNaruto = (data) => {
+    if (!Array.isArray(data)) {
+      console.error("Invalid data format:", data);
+      return;
+    }
+    setNarutoData(data);
   };
 
   const handlePrevPage = async () => {
-    if(!prevURL) return;
-    let data = await getAllNaruto(prevURL);
-    await loadNaruto(data.results);
-    setNextURL(data.next);
-    setPrevURL(data.previous);
-  }
+  //   if (!prevURL) return;
+  //   let data = await getAllNaruto(prevURL);
+  //   if (data && data.characters) {
+  //     loadNaruto(data.characters);
+  //     setNextURL(data.next || "");
+  //     setPrevURL(data.previous || "");
+    // }
+  };
+  
   const handleNextPage = async () => {
-    let data = await getAllNaruto(nextURL);
-    await loadNaruto(data.results);
-    setNextURL(data.next);
-    setPrevURL(data.previous);
+  //   if (!nextURL) {
+  //     console.error("No next URL available");
+  //     return;
+  //   }
+  //   try {
+  //     let data = await getAllNaruto(nextURL);
+  //     console.log("Next page data:", data);
+  //     if (data && data.characters) {
+  //       loadNaruto(data.characters);
+  //       setNextURL(data.next || "");
+  //       setPrevURL(data.previous || "");
+  //     } else {
+  //       console.error("Unexpected response on next page:", data);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching next page:", error);
+  //   }
   };
 
   return (
