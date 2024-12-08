@@ -1,87 +1,70 @@
-import './App.css';
-import React, { useEffect, useState } from 'react';
-import { getAllNaruto } from "./characters";
-import Card from './components/Card';
-import Navbar from './components/Navbar/Navbar';
+import React, { useState, useEffect } from "react";
+import { getAllNaruto } from "./characters"; // API呼び出し関数
+import Card from "./components/Card";
+import Navbar from "./components/Navbar/Navbar";
+import "./App.css";
 
 function App() {
-  const initialURL = "https://narutodb.xyz/api/character";
+  const baseURL = "https://narutodb.xyz/api/character";
   const [narutoData, setNarutoData] = useState([]);
-  // const [nextURL, setNextURL] = useState("");
-  // const [prevURL, setPrevURL] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
+  const [totalCharacters, setTotalCharacters] = useState(0);
 
   useEffect(() => {
-const fetchNarutoData = async () => {
-  let res = await getAllNaruto(initialURL);
-  console.log("API Response:", res); 
-  if (res && res.characters) {
-    setNarutoData(res.characters);
-    // setNextURL(res.next || "");
-    // setPrevURL(res.previous || "");
-  } else {
-    console.error("Unexpected API response structure:", res);
-  }
-};
+    fetchNarutoData(currentPage);
+  }, [currentPage]);
 
+  const fetchNarutoData = async (page) => {
+    try {
+      const url = `${baseURL}?page=${page}&limit=${pageSize}`;
+      const res = await getAllNaruto(url);
 
-    fetchNarutoData();
-  }, []);
-
-  const loadNaruto = (data) => {
-    if (!Array.isArray(data)) {
-      console.error("Invalid data format:", data);
-      return;
+      if (res && res.characters) {
+        setNarutoData(res.characters);
+        setTotalCharacters(res.totalCharacters || 0);
+      } else {
+        console.error("Unexpected API response:", res);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
-    setNarutoData(data);
   };
 
-  const handlePrevPage = async () => {
-  //   if (!prevURL) return;
-  //   let data = await getAllNaruto(prevURL);
-  //   if (data && data.characters) {
-  //     loadNaruto(data.characters);
-  //     setNextURL(data.next || "");
-  //     setPrevURL(data.previous || "");
-    // }
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
   };
-  
-  const handleNextPage = async () => {
-  //   if (!nextURL) {
-  //     console.error("No next URL available");
-  //     return;
-  //   }
-  //   try {
-  //     let data = await getAllNaruto(nextURL);
-  //     console.log("Next page data:", data);
-  //     if (data && data.characters) {
-  //       loadNaruto(data.characters);
-  //       setNextURL(data.next || "");
-  //       setPrevURL(data.previous || "");
-  //     } else {
-  //       console.error("Unexpected response on next page:", data);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching next page:", error);
-  //   }
+
+  const handleNextPage = () => {
+    const totalPages = Math.ceil(totalCharacters / pageSize);
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
   };
 
   return (
     <>
-    <Navbar />
-    <div className="App">
-      <div className='narutoCardContainer'>
-        {narutoData.map((characters,i) =>{
-          return(
-            <Card key={i} characters={characters}/>
-          );
-        }
-      )}
+      <Navbar />
+      <div className="App">
+        <div className="narutoCardContainer">
+          {narutoData.map((character) => (
+            <Card key={character.id} characters={character} />
+          ))}
+        </div>
+        <div className="btn">
+          <button onClick={handlePrevPage} disabled={currentPage === 1}>
+            前へ
+          </button>
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage === Math.ceil(totalCharacters / pageSize)}
+          >
+            次へ
+          </button>
+        </div>
       </div>
-      <div className='btn'>
-        <button onClick={handlePrevPage}>前へ</button>
-        <button onClick={handleNextPage}>次へ</button>
-      </div>
-    </div>
     </>
   );
 }
