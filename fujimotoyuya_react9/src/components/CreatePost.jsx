@@ -1,25 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import "./CreatePost.css";
 import { addDoc, collection } from "firebase/firestore";
 import { auth, db } from "../firebase";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const CreatePost = ({ isAuth }) => {
-  const [title, setTitle] = useState("");
-  const [postText, setPostText] = useState("");
+  const [title, setTitle] = useState();
+  const [postText, setPostText] = useState();
   const navigate = useNavigate();
 
-  const createPost = async () => {
-    if (!auth.currentUser) {
-      alert("ログインしてください。");
-      navigate("/login");
-      return;
-    }
-    if (!title.trim() || !postText.trim()) {
-      alert("タイトルと日記内容の両方を記入してください。");
-      return;
-    }
-    await addDoc(collection(db, "posts"), {
+  const createPost = async() =>{
+    await addDoc(collection(db, "posts"),{
       title: title,
       postText: postText,
       author: {
@@ -31,10 +22,10 @@ const CreatePost = ({ isAuth }) => {
   };
 
   useEffect(() => {
-    if (!isAuth) {
+    if (!isAuth){
       navigate("/login");
     }
-  }, [isAuth, navigate]);
+  }, []);
 
   return (
     <div className="createPostPage">
@@ -43,18 +34,18 @@ const CreatePost = ({ isAuth }) => {
 
         <div className="inputPost">
           <div>タイトル</div>
-          <input
+          {/* タイトルエリア入力 */}
+          <input 
             type="text"
             placeholder="タイトルを記入"
-            value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
 
         <div className="inputPost">
-          <textarea
+          {/* できごと入力エリア */}
+          <textarea 
             placeholder="日記内容を記入"
-            value={postText}
             onChange={(e) => setPostText(e.target.value)}
           ></textarea>
         </div>
@@ -62,9 +53,10 @@ const CreatePost = ({ isAuth }) => {
         <button className="postButton" onClick={createPost}>
           作成する
         </button>
+
       </div>
     </div>
   );
 };
 
-export default CreatePost;
+export default CreatePost
