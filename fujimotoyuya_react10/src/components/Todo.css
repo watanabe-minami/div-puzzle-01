@@ -1,9 +1,25 @@
+.contentsAria{
+    margin: 0 20px;
+}
+
 .inputArea{
-    margin-top: 30px;
+    width: 916px;
+    border-radius: 10px;
+    background-color: #747474;
+    margin: 30px auto 0 auto;
+    padding: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
+
+    
+    @media screen and (max-width: 768px) {
+        width: 680px;
+        display: grid;
+        grid-template-columns: repeat(1, auto);
+        place-items: center;
+    }
 
 }
 
@@ -13,10 +29,19 @@
     padding: 8px;
     line-height: 1;
     font-size: 14px;
+    border-radius: 5px;
 }
 
 .inputTodo{
     width: 500px;
+}
+
+.inputArea .inputCompleteDateAria{
+    text-wrap: nowrap;
+}
+
+.inputArea label{
+    color: #fff;
 }
 
 .inputArea .inputCompleteDateAria .inputCompleteDate{
@@ -27,9 +52,22 @@
     padding: 13.5px 8px;
 }
 
-.inputArea button{
+.inputArea button, .todoItem button{
+    transform: translateY(-1px);
     padding: 4px 10px;
     margin-left: 10px;
+    border-radius: 5px;
+    transition: 0.2s;
+    background-color: #10b035;
+    box-shadow: 5px 5px 15px -5px #2b2b2b;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+}
+
+.inputArea button:hover, .todoItem button:hover{
+    transform: translateY(0px);
+    box-shadow: none;
 }
 
 .todoList{
@@ -38,7 +76,7 @@
 }
 
 .todoItem{
-    width: 800px;
+    width: 916px;
     margin: 20px auto 0 auto;
     display: flex;
     justify-content: center;
@@ -46,6 +84,10 @@
     padding: 12px;
     border-radius: 10px;
     box-shadow: 5px 5px 15px -5px #777777;
+
+    @media screen and (max-width: 768px) {
+        width: 680px;
+    }
 }
 
 .todoItem .todoTextAria{

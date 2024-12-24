@@ -21,7 +21,7 @@ const Todo = ({ isAuth }) => {
       }
     };
 
-    if (isAuth) { // isAuth をそのまま利用
+    if (isAuth) {
       fetchTodos();
     }
 
@@ -51,12 +51,16 @@ const Todo = ({ isAuth }) => {
   };
 
   const handleDeleteTodo = async (id) => {
+    const todoToDelete = todos.find((todo) => todo.id === id);
+
+    if (!todoToDelete || todoToDelete.author.id !== auth.currentUser.uid) return;
+
     await deleteDoc(doc(db, "todos", id));
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
   return (
-    <>
+    <div className="contentsAria">
       {isAuth ? (
         <div>
           <div className="inputArea">
@@ -74,36 +78,39 @@ const Todo = ({ isAuth }) => {
                 value={completionDate}
                 onChange={(e) => setCompletionDate(e.target.value)}
               />
+              <button onClick={handleAddTodo}>追加</button>
             </div>
-            <button onClick={handleAddTodo}>追加</button>
           </div>
 
           <div className="todoList">
-            {todos.map((todo) => (
-              <div key={todo.id} className="todoItem">
-                <div className="todoTextAria">
-                  <span>{todo.text}</span>
-                  <div className="todoDataAria">
-                    <span className="todoCreateDate">
-                      作成日: {new Date(todo.createdAt).toLocaleDateString()}
+          {todos.map((todo) => (
+            <div key={todo.id} className="todoItem">
+              <div className="todoTextAria">
+                <span>{todo.text}</span>
+                <div className="todoDataAria">
+                  <span className="todoCreateDate">
+                    作成日: {new Date(todo.createdAt).toLocaleDateString()}
+                  </span>
+                  <span className="todoAuthor">作成者: {todo.author.username}</span>
+                  {todo.completionDate && (
+                    <span className="todoCompleteDate">
+                      完了予定日: {new Date(todo.completionDate).toLocaleDateString()}
                     </span>
-                    <span className="todoAuthor">作成者: {todo.author.username}</span>
-                    {todo.completionDate && (
-                      <span className="todoCompleteDate">
-                        完了予定日: {new Date(todo.completionDate).toLocaleDateString()}
-                      </span>
-                    )}
-                  </div>
+                  )}
                 </div>
-                <button onClick={() => handleDeleteTodo(todo.id)}>削除</button>
               </div>
-            ))}
-          </div>
+              {todo.author.id === auth.currentUser.uid && ( // 作成者とログインユーザーが一致する場合のみ削除ボタンを表示
+                <button onClick={() => handleDeleteTodo(todo.id)}>削除</button>
+              )}
+            </div>
+          ))}
+        </div>
+
         </div>
       ) : (
         <p>ログインしてください。</p>
       )}
-    </>
+    </div>
   );
 };
 
