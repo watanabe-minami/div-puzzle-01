@@ -18,27 +18,27 @@ function App() {
       setIsAuth(true);
     }
 
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setIsAuth(true);
-        localStorage.setItem('user', JSON.stringify(user));
-      } else {
-        setIsAuth(false);
-        localStorage.removeItem('user');
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
+      const unsubscribe = auth.onAuthStateChanged((user) => {
+        if (user) {
+          setIsAuth(true);
+          localStorage.setItem('user', JSON.stringify(user));
+        } else {
+          setIsAuth(false);
+          localStorage.removeItem('user');
+        }
+      });
+    
+      return () => unsubscribe();
+    }, []);
 
   return (
     <Router>
       <Navbar isAuth={isAuth} />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/createpost" element={<CreatePost isAuth={isAuth} />} />
         <Route path="/login" element={<Login setIsAuth={setIsAuth} />} />
         <Route path="/logout" element={<Logout setIsAuth={setIsAuth} />} />
+        <Route path="/createpost" element={<CreatePost isAuth={isAuth} />} />
         <Route path="/todo" element={<Todo isAuth={isAuth} />} />
       </Routes>
     </Router>

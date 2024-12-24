@@ -1,31 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import "./CreatePost.css";
 import { addDoc, collection } from "firebase/firestore";
 import { auth, db } from "../firebase";
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const CreatePost = ({ isAuth }) => {
-  const [title, setTitle] = useState();
-  const [postText, setPostText] = useState();
+  const [title, setTitle] = useState("");
+  const [postText, setPostText] = useState("");
   const navigate = useNavigate();
 
-  const createPost = async() =>{
-    await addDoc(collection(db, "posts"),{
-      title: title,
-      postText: postText,
+  useEffect(() => {
+    const checkAuth = () => {
+      const user = localStorage.getItem("user");
+      if (!user) {
+        navigate("/login");
+      }
+    };
+
+    checkAuth();
+  }, [navigate]);
+
+  const createPost = async () => {
+    if (!title.trim() || !postText.trim()) return;
+
+    await addDoc(collection(db, "posts"), {
+      title,
+      postText,
       author: {
         username: auth.currentUser.displayName,
         id: auth.currentUser.uid,
       },
     });
+
     navigate("/");
   };
-
-  useEffect(() => {
-    if (!isAuth){
-      navigate("/login");
-    }
-  }, []);
 
   return (
     <div className="createPostPage">
@@ -34,18 +42,18 @@ const CreatePost = ({ isAuth }) => {
 
         <div className="inputPost">
           <div>タイトル</div>
-          {/* タイトルエリア入力 */}
-          <input 
+          <input
             type="text"
             placeholder="タイトルを記入"
+            value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
 
         <div className="inputPost">
-          {/* できごと入力エリア */}
-          <textarea 
+          <textarea
             placeholder="日記内容を記入"
+            value={postText}
             onChange={(e) => setPostText(e.target.value)}
           ></textarea>
         </div>
@@ -53,10 +61,9 @@ const CreatePost = ({ isAuth }) => {
         <button className="postButton" onClick={createPost}>
           作成する
         </button>
-
       </div>
     </div>
   );
 };
 
-export default CreatePost
+export default CreatePost;
