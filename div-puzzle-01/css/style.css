@@ -1,1 +1,28 @@
 @charset "utf-8";
+.wrapper{
+    width: 1200px;
+    margin: 0 auto;
+}
+.heder{
+    background-color: #00ffff;
+    width: 1200px;
+    height: 70px;
+}
+.main{
+display: flex;
+}
+.right{
+    background-color:  #0f0;
+    width: 900px;
+    height: 500px;
+}
+.left{
+    background-color:  #ffa500;
+    width: 300px;
+    height: 500px;
+}
+.footer{
+    background-color: #c0c0c0;
+    width: 1200px;
+    height: 130px;
+}
